@@ -1,13 +1,13 @@
-FROM henryiii/root6:latest
+FROM rootproject/root-ubuntu16
 MAINTAINER Henry Schreiner <henry.schreiner@uc.edu>
 
-# Updated 2017-2-14
-RUN cd / && git clone https://github.com/GooFit/GooFit.git && cd GooFit && git checkout mpi
+# Updated 2017-8-18
+WORKDIR /home/sftnight
+RUN git clone --branch=stable --recursive https://github.com/GooFit/GooFit.git
+RUN mkdir /home/sftnight/GooFit/build
+WORKDIR /home/sftnight/GooFit/build
 
-WORKDIR /GooFit
-
-RUN mkdir build && cd build && cmake ..\
-    -DGOOFIT_DEVICE=OMP -DGOOFIT_EXAMPLES=ON -DGOOFIT_PROJECTS=ON -DGOOFIT_SEPARATE_COMP=ON \
-    && make -j2
+RUN cmake .. -DGOOFIT_DEVICE=OMP -Wno-dev
+RUN make -j$(nproc)
 
 CMD ["bash"]
