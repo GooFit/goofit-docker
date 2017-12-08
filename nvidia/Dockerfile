@@ -20,9 +20,9 @@ RUN chmod +x /prepare.sh
 
 # In contrast to the docs, this unpacks ROOT
 ADD https://root.cern.ch/download/root_v6.10.04.Linux-ubuntu16-x86_64-gcc5.4.tar.gz /opt
-# Updated 8-18-2017 
+# Updated 2017-12--8 with GooFit 2.1
 
-RUN git clone --branch=stable --recursive https://github.com/GooFit/GooFit.git /GooFit && \
+RUN git clone --branch=2.1 --recursive https://github.com/GooFit/GooFit.git /GooFit && \
     mkdir /GooFit/build
 WORKDIR /GooFit/build
 RUN cmake .. -DGOOFIT_DEVICE=CUDA
